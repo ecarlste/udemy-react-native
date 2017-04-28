@@ -5,6 +5,12 @@ import { Header } from './components/common';
 import LoginForm from './components/LoginForm';
 
 class App extends Component {
+    static isUserAuthenticated(user) {
+        return !!user;
+    }
+
+    state = { loggedIn: false };
+
     componentWillMount() {
         firebase.initializeApp({
                 apiKey: 'AIzaSyCOLfjPmNbEP4q-VHU8WGaGLjV2DJKbNwY',
@@ -14,6 +20,10 @@ class App extends Component {
                 storageBucket: 'authentication-f47fe.appspot.com',
                 messagingSenderId: '790322251231'
             });
+
+        firebase.auth().onAuthStateChanged((user) => {
+            this.setState({ loggedIn: App.isUserAuthenticated(user) });
+        });
     }
 
     render() {
