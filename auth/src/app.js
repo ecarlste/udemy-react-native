@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import firebase from 'firebase';
 import { Button, CardSection, Header, Spinner } from './components/common';
 import LoginForm from './components/LoginForm';
@@ -39,7 +39,7 @@ class App extends Component {
                 return <LoginForm />;
             default:
                 return (
-                    <View>
+                    <View style={styles.centered}>
                         <Spinner size='large' />
                     </View>
                 );
@@ -48,12 +48,21 @@ class App extends Component {
 
     render() {
         return (
-            <View>
+            <View style={{ borderColor: 'black', borderWidth: 5, flex: 1 }}>
                 <Header headerText="Authentication" />
                 {this.renderContent()}
             </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    centered: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+        flexDirection: 'column'
+    }
+});
 
 export default App;
