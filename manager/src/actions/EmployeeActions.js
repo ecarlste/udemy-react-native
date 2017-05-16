@@ -29,12 +29,20 @@ export const employeeCreate = ({ name, phone, shift }) => {
 export const employeesFetch = () => {
     const { currentUser } = firebase.auth();
 
-    console.log('Did this work?');
-
     return (dispatch) => {
         firebase.database().ref(`/users/${currentUser.uid}/employees`)
             .on('value', snapshot => {
                 dispatch({ type: EMPLOYEES_FETCH_SUCCESS, payload: snapshot.val() });
             });
+    };
+};
+
+export const employeeSave = ({ name, phone, shift, uid }) => {
+    const { currentUser } = firebase.auth();
+
+    return () => {
+        firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)
+            .set({ name, phone, shift })
+            .then(() => console.log('saved employee'));
     };
 };
